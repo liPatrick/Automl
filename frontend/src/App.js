@@ -160,6 +160,7 @@ function App() {
           })
         }).then((response) => response.json())
           .then((data) => {
+            /*
             let model_id = data["model_id"]
             let date = data["date"]
             let features = data["features"]
@@ -168,7 +169,16 @@ function App() {
             let modelLiteral = { model_id: model_id, date: date, features: features, output: output, modelType: modelType }
             let pastModelsCopy = structuredClone(pastModels)
             pastModelsCopy.unshift(modelLiteral)
-            setPastModels(pastModelsCopy)
+            setPastModels(pastModelsCopy)*/
+            fetch("/models", {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            }).then((response) => response.json())
+              .then((data) => {
+                setPastModels(data)
+              })
 
           })
       }
@@ -184,7 +194,8 @@ function App() {
         for (let j = 0; j < pastModels[i]["features"].length; j++) {
           featureAndWeights.push({ feature: pastModels[i]["features"][j], weight: 0 })
         }
-        let myModel = { model_id: e.target.id, features: featureAndWeights, output: pastModels[i]["output"] }
+        let myModel = { model_id: e.target.id, features: featureAndWeights, output: pastModels[i]["output"], auc: pastModels[i]["auc"], tfr: pastModels[i]["tfr"], tnr: pastModels[i]["tnr"], tpr: pastModels[i]["tpr"], fnr: pastModels[i]["fnr"], ppv: pastModels[i]["ppv"], npv: pastModels[i]["npv"], fdr: pastModels[i]["fdr"] }
+        console.log(myModel)
         setCurrModel(myModel)
       }
     }
@@ -381,7 +392,6 @@ function App() {
             <div className="left-panel box" style={{ flex: 5 }}>
               <label className="text-base font-medium text-gray-900">Select your Model</label>
               <fieldset className="mt-4">
-                <legend className="sr-only">Notification method</legend>
                 <div className="space-y-4">
                   {pastModels.map((model) => (
                     <div key={model.model_id} className="flex items-center">
@@ -434,6 +444,12 @@ function App() {
                 Predict
               </button>
               <Prediction predVal={currPrediction} />
+              <p>Metrics: </p>
+              <p>Accuracy: {currModel.auc}</p>
+              <p>True positive rate: {currModel.tpr}</p>
+              <p>True negative rate: {currModel.tnr} </p>
+              <p>Precision: {currModel.ppv}</p>
+
             </div>
           </div>
         </div>

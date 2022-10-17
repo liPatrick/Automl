@@ -51,7 +51,7 @@ def train():
     m = train_model(fDataset, fOutputs, fFeatures)
 
     #save model in db 
-    newModel = MLModels(uid, fDate, fFeatures, fOutputs, m[0], m[1])
+    newModel = MLModels(uid, fDate, fFeatures, fOutputs, m["model_name"], m["model_bin"], m["auc"], m["tpr"], m["tnr"], m["fpr"], m["fnr"], m["ppv"], m["npv"], m["fdr"])
     ml_db.app_session.add(newModel)
     ml_db.app_session.commit()
     result = ml_db.app_session.query(MLModels).filter(MLModels.id == uid).first()
@@ -67,7 +67,16 @@ def train():
         date=fDate,
         features=fFeatures,
         output=fOutputs,
-        modelType=m[0],
+        modelType=m["model_name"],
+        auc=m["auc"],
+        tpr=m["tpr"],
+        tnr=m["tnr"],
+        fpr=m["fpr"],
+        fnr=m["fnr"],
+        ppv=m["ppv"],
+        npv=m["npv"],
+        fdr=m["fdr"]
+        
     )
 
     model_dict = model_output.asdict()
@@ -103,12 +112,30 @@ def models():
         ffeatures = val.features[1:-1].split(",")
         foutput = val.output
         fmodelType = val.modelType
+        fauc = val.auc
+        ftpr = val.tpr
+        ftnr = val.tnr
+        ffpr = val.fpr
+        ffnr = val.fnr
+        fppv = val.ppv
+        fnpv = val.npv
+        ffdr = val.fdr
+        
+
         model_output: ModelClassification = ModelClassification(
             model_id=fid,
             date=fdate,
             features=ffeatures,
             output=foutput,
             modelType=fmodelType,
+            auc=fauc,
+            tpr=ftpr,
+            tnr=ftnr,
+            fpr=ffpr,
+            fnr=ffnr,
+            ppv=fppv,
+            npv=fnpv,
+            fdr=ffdr
         )
         model_dict = model_output.asdict()
         returnVal.append(model_dict)
