@@ -12,6 +12,7 @@ sqlalchemy-utils = "*"
 flask-sqlalchemy = "*"
 flask-login = "*"
 psycopg2 = "*"
+sklearn = "*"
 
 [dev-packages]
 
