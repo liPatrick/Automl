@@ -238,7 +238,6 @@ function App() {
       return (
         <div>
           <p>{currModel.output + " result: " + String(props.predVal[0])}</p>
-          <p>confidence: {String(props.predVal[1].toFixed() * 100) + "%"} </p>
         </div>
       )
     } else {
