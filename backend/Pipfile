@@ -6,13 +6,11 @@ name = "pypi"
 [packages]
 flask = "*"
 requests = "*"
-openai = "*"
-sqlalchemy = "*"
-sqlalchemy-utils = "*"
 flask-sqlalchemy = "*"
-flask-login = "*"
+SQLAlchemy = "*"
+sqlalchemy-utils = "*"
 psycopg2 = "*"
-sklearn = "*"
+scikit-learn = "*"
 
 [dev-packages]
 
