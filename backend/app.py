@@ -55,12 +55,6 @@ def train():
     ml_db.app_session.add(newModel)
     ml_db.app_session.commit()
     result = ml_db.app_session.query(MLModels).filter(MLModels.id == uid).first()
-    print(result.id)
-    print(result.date)
-    print(result.features)
-    print(result.output)
-    print(result.modelType)
-    print(result.modelBin)
 
     model_output: ModelClassification = ModelClassification(
         model_id=uid,
@@ -76,11 +70,10 @@ def train():
         ppv=m["ppv"],
         npv=m["npv"],
         fdr=m["fdr"]
-        
     )
-
     model_dict = model_output.asdict()
-    return jsonify(model_dict)
+    print(model_dict)
+    return "200"
 
 @app.route("/predict", methods=['POST'])
 def predict(): 

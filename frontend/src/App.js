@@ -170,6 +170,7 @@ function App() {
             let pastModelsCopy = structuredClone(pastModels)
             pastModelsCopy.unshift(modelLiteral)
             setPastModels(pastModelsCopy)*/
+            console.log(data)
             fetch("/models", {
               method: 'GET',
               headers: {
@@ -194,7 +195,7 @@ function App() {
         for (let j = 0; j < pastModels[i]["features"].length; j++) {
           featureAndWeights.push({ feature: pastModels[i]["features"][j], weight: 0 })
         }
-        let myModel = { model_id: e.target.id, features: featureAndWeights, output: pastModels[i]["output"], auc: pastModels[i]["auc"], tfr: pastModels[i]["tfr"], tnr: pastModels[i]["tnr"], tpr: pastModels[i]["tpr"], fnr: pastModels[i]["fnr"], ppv: pastModels[i]["ppv"], npv: pastModels[i]["npv"], fdr: pastModels[i]["fdr"] }
+        let myModel = { model_id: e.target.id, features: featureAndWeights, output: pastModels[i]["output"], auc: pastModels[i]["auc"], tpr: pastModels[i]["tpr"], tnr: pastModels[i]["tnr"], fpr: pastModels[i]["fpr"], fnr: pastModels[i]["fnr"], ppv: pastModels[i]["ppv"], npv: pastModels[i]["npv"], fdr: pastModels[i]["fdr"] }
         console.log(myModel)
         setCurrModel(myModel)
       }
